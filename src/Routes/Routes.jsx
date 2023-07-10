@@ -1,8 +1,10 @@
-import Main from "../Layout/Main";
-import Home from "../Pages/Home/Home/Home";
-import * as React from 'react';
-import * as ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
+import Main from '../Layout/Main';
+// import ServiceLayout from "../Layout/ServiceLayout";
+import Home from '../Pages/Home/Home/Home';
+import Login from "../Pages/Login/Login";
+import SignUp from "../Pages/SignUp/SignUp";
+import CheckOut from "../Pages/CheckOut/CheckOut";
 
 const router = createBrowserRouter([
   {
@@ -11,15 +13,28 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home></Home>
+        element: <Home></Home>,
       },
-    ]
+      {
+        path: '/login',
+        element: <Login></Login>,
+      },
+      {
+        path: '/signup',
+        element: <SignUp></SignUp>,
+      },
+      {
+        path: '/checkout/:id',
+        element: <CheckOut></CheckOut>,
+        loader: ({params}) =>
+          fetch(`http://localhost:5000/services/${params.id}`),
+      },
+    ],
   },
+  // {
+  //   path: '/servicedetails/:id',
+  //   element: <ServiceLayout></ServiceLayout>
+  // },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-);
 export default router;

@@ -1,28 +1,42 @@
+import { useContext } from "react";
 import logo from '../../../assets/logo.svg'
+import { AuthContext } from "../../../providers/AuthProvider";
+import { Link } from "react-router-dom";
+
 const Header = () => {
+  const {user, logOut} = useContext(AuthContext);
+  const handleLogOut = () => {
+    logOut()
+    .then(()=> {})
+    .catch(error => console.log(error))
+  }
     const lists = (
       <>
         <li>
-          
-          <a to="/"> Home </a>
+          <Link to="/"> Home </Link>
         </li>
         <li>
-          
-          <a to="/"> About </a>
+          <Link to="/"> About </Link>
         </li>
         <li>
-          
-          <a to="/"> Services </a>
+          <Link to="/"> Services </Link>
         </li>
         <li>
-          
-          <a to="/"> Contact </a>
+          <Link to="/"> Contact </Link>
         </li>
         <li>
-          
-          <a to="/"> Blog </a>
+          <Link to="/"> Blog </Link>
         </li>
-        
+
+        {user?.email ? (
+          <li>
+            <Link onClick={handleLogOut}> Log Out </Link>
+          </li>
+        ) : (
+          <li>
+            <Link to='/login'> Log In </Link>
+          </li>
+        )}
       </>
     );
     
