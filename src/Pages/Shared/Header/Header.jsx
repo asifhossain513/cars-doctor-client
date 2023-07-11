@@ -29,12 +29,17 @@ const Header = () => {
         </li>
 
         {user?.email ? (
-          <li>
-            <Link onClick={handleLogOut}> Log Out </Link>
-          </li>
+          <>
+            <li>
+              <Link to='/bookings'> My Bookings </Link>
+            </li>
+            <li>
+              <Link onClick={handleLogOut}> Log Out </Link>
+            </li>
+          </>
         ) : (
           <li>
-            <Link to='/login'> Log In </Link>
+            <Link to="/login"> Log In </Link>
           </li>
         )}
       </>

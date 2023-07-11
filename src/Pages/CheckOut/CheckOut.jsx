@@ -3,7 +3,7 @@ import { useLoaderData } from "react-router-dom";
 
 const CheckOut = () => {
     const loadedService = useLoaderData();
-    const {title, _id, price} = loadedService;
+    const {title, _id, price, img, } = loadedService;
     console.log(loadedService);
     const handleOrder = event => {
         event.preventDefault();
@@ -12,13 +12,17 @@ const CheckOut = () => {
         const email = form.email.value;
         const phone = form.phone.value;
         const note = form.note.value;
+        const date = form.date.value;
         const orderDetails = {
-            name,
-            email,
-            phone,
-            note,
-            service: _id,
-            price: price,
+          name,
+          email,
+          phone,
+          note,
+          service: _id,
+          price: price,
+          img,
+          title,
+          date
         };
         console.log(orderDetails)
         fetch('http://localhost:5000/checkout', {
