@@ -1,8 +1,8 @@
 import React from 'react';
 import { HiX } from 'react-icons/hi';
 
-const BookingCard = ({ booking, handleRemoveBooking }) => {
-  const { img, price, title, date, _id } = booking;
+const BookingCard = ({ booking, handleRemoveBooking, handleUpdate }) => {
+  const { img, price, title, date, _id, status } = booking;
 
   return (
     <table className="table">
@@ -43,7 +43,16 @@ const BookingCard = ({ booking, handleRemoveBooking }) => {
             <p className="font-bold">{date}</p>
           </td>
           <th>
-            <button className="btn btn-warning btn-xs">Pending</button>
+            {status === 'confirm' ? (
+              <span>Confirmed</span>
+            ) : (
+              <button
+                className="btn btn-warning btn-xs"
+                onClick={() => handleUpdate(_id)}
+              >
+                Pending
+              </button>
+            )}
           </th>
         </tr>
       </tbody>
