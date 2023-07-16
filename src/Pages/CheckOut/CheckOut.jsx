@@ -1,20 +1,22 @@
-import React from 'react';
-import { useLoaderData } from "react-router-dom";
+import React, { useContext } from 'react';
+import { useLoaderData, } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const CheckOut = () => {
     const loadedService = useLoaderData();
+    const {user} = useContext(AuthContext)
     const {title, _id, price, img, } = loadedService;
     console.log(loadedService);
     const handleOrder = event => {
         event.preventDefault();
         const form = event.target;
-        const name = form.name.value;
+        const productName = form.productName.value;
         const email = form.email.value;
         const phone = form.phone.value;
         const note = form.note.value;
         const date = form.date.value;
         const orderDetails = {
-          name,
+          productName,
           email,
           phone,
           note,
@@ -22,7 +24,7 @@ const CheckOut = () => {
           price: price,
           img,
           title,
-          date
+          date,
         };
         console.log(orderDetails)
         fetch('http://localhost:5000/checkout', {
@@ -47,9 +49,9 @@ const CheckOut = () => {
             <div className="form-control">
               <input
                 type="text"
-                placeholder="Enter your name"
                 className="input input-bordered"
-                name="name"
+                name="productName"
+                defaultValue={title}
               />
             </div>
             <div className="form-control">
@@ -74,6 +76,7 @@ const CheckOut = () => {
                 placeholder="Enter your Email"
                 className="input input-bordered"
                 name="email"
+                defaultValue={user.email}
               />
             </div>
             <div className="form-control col-span-2">
