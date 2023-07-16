@@ -8,6 +8,7 @@ const Login = () => {
   const location = useLocation();
   const from = location?.state?.from?.pathname || '/';
   const navigate = useNavigate();
+  
     const handleLogIn = event => {
         event.preventDefault();
         const form = event.target;
@@ -21,7 +22,24 @@ const Login = () => {
         .then(result => {
           const user = result.user;
           console.log(user)
-          navigate(from, {replace: true})
+          const loggedUser = {
+            email : user.email,
+          };
+          console.log('loged user', loggedUser);
+          fetch('http://localhost:5000/jwt', {
+            method: "POST",
+            headers:{
+              'content-type' : 'application/json'
+            },
+            body: JSON.stringify(loggedUser)
+          })
+          .then(res => res.json())
+          .then(data => {
+            console.log(data)
+            localStorage.setItem('jwt', data.token)
+            navigate(from, { replace: true });
+
+          })
         })
         .catch(error => console.log(error))
     }

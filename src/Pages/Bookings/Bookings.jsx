@@ -2,17 +2,32 @@ import React, { useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../providers/AuthProvider';
 import BookingCard from './BookingCard/BookingCard';
+import { useNavigate } from "react-router-dom";
 
 const Bookings = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
   const url = `http://localhost:5000/checkout?email=${user?.email}`;
-
+  const navigate = useNavigate();
   useEffect(() => {
-    fetch(url)
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        // 'content-type': 'application.json',
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
+      // body: JSON.stringify(authorization),
+    })
       .then((res) => res.json())
-      .then((data) => setBookings(data));
-  }, [url]);
+      .then((data) => {
+        if(!data.error){
+         setBookings(data);
+        }
+        else{
+          navigate('/')
+        }
+      })
+  }, [url, navigate])
 
   const handleRemoveBooking = (_id) => {
     console.log('Deleting', _id);
@@ -71,7 +86,6 @@ const Bookings = () => {
             setBookings(newBookings);
             console.log(data);
             Swal.fire('Saved!', '', 'success');
-
             }
           });
       } else if (result.isDenied) {

@@ -7,7 +7,9 @@ const Header = () => {
   const {user, logOut} = useContext(AuthContext);
   const handleLogOut = () => {
     logOut()
-    .then(()=> {})
+    .then(()=> {
+      localStorage.removeItem('jwt')
+    })
     .catch(error => console.log(error))
   }
     const lists = (
