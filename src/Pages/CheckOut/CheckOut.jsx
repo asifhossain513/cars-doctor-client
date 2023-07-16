@@ -27,7 +27,7 @@ const CheckOut = () => {
           date,
         };
         console.log(orderDetails)
-        fetch('http://localhost:5000/checkout', {
+        fetch('https://cars-doctor-server-alpha.vercel.app/checkout', {
           method: 'POST',
           headers: {
             'Content-type': 'application/json',

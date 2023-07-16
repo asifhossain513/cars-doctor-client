@@ -8,7 +8,6 @@ const Header = () => {
   const handleLogOut = () => {
     logOut()
     .then(()=> {
-      localStorage.removeItem('jwt')
     })
     .catch(error => console.log(error))
   }

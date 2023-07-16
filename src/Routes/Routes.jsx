@@ -2,11 +2,11 @@ import { createBrowserRouter } from 'react-router-dom';
 import Main from '../Layout/Main';
 // import ServiceLayout from "../Layout/ServiceLayout";
 import Bookings from "../Pages/Bookings/Bookings";
+import CheckOut from "../Pages/CheckOut/CheckOut";
 import Home from '../Pages/Home/Home/Home';
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
-import CheckOut from "../Pages/CheckOut/CheckOut";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
           <CheckOut></CheckOut>
         </PrivateRoute>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/services/${params.id}`),
+          fetch(`https://cars-doctor-server-alpha.vercel.app/services/${params.id}`),
       },
       {
         path: '/bookings',

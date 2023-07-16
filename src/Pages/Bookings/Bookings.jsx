@@ -1,22 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../providers/AuthProvider';
 import BookingCard from './BookingCard/BookingCard';
-import { useNavigate } from "react-router-dom";
 
 const Bookings = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
-  const url = `http://localhost:5000/checkout?email=${user?.email}`;
+  const url = `https://cars-doctor-server-alpha.vercel.app/checkout?email=${user?.email}`;
   const navigate = useNavigate();
   useEffect(() => {
     fetch(url, {
       method: 'GET',
       headers: {
-        // 'content-type': 'application.json',
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
       },
-      // body: JSON.stringify(authorization),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -42,7 +40,7 @@ const Bookings = () => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/bookings/${_id}`, {
+        fetch(`https://cars-doctor-server-alpha.vercel.app/bookings/${_id}`, {
           method: 'DELETE',
         })
           .then((res) => res.json())
@@ -69,7 +67,7 @@ const Bookings = () => {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/bookings/${_id}`, {
+        fetch(`https://cars-doctor-server-alpha.vercel.app/bookings/${_id}`, {
           method: 'PATCH',
           headers: {
             'content-type': 'application/json',

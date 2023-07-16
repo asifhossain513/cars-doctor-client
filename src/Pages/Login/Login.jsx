@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate, } from "react-router-dom";
 import loginImage from "../../../src/assets/images/login/login.svg";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import SocialLogIn from "../SocialLogIn/SocialLogIn";
 
 const Login = () => {
   const {signIn} = useContext(AuthContext);
@@ -22,24 +23,11 @@ const Login = () => {
         .then(result => {
           const user = result.user;
           console.log(user)
-          const loggedUser = {
-            email : user.email,
-          };
-          console.log('loged user', loggedUser);
-          fetch('http://localhost:5000/jwt', {
-            method: "POST",
-            headers:{
-              'content-type' : 'application/json'
-            },
-            body: JSON.stringify(loggedUser)
-          })
-          .then(res => res.json())
-          .then(data => {
-            console.log(data)
-            localStorage.setItem('jwt', data.token)
-            navigate(from, { replace: true });
 
-          })
+           navigate(from, { replace: true });
+
+          // console.log('loged user', loggedUser);
+// ddd
         })
         .catch(error => console.log(error))
     }
@@ -49,6 +37,7 @@ const Login = () => {
           <div className="text-center lg:text-left w-1/2">
             <img src={loginImage} alt="" />
           </div>
+
           <div className="card flex-shrink-0 max-w-sm shadow-2xl bg-base-100 w-1/2">
             <div className="card-body">
               <form onSubmit={handleLogIn}>
@@ -59,7 +48,8 @@ const Login = () => {
                   <input
                     type="email"
                     placeholder="Enter Your Email"
-                    className="input input-bordered" name="email"
+                    className="input input-bordered"
+                    name="email"
                   />
                 </div>
                 <div className="form-control">
@@ -69,7 +59,8 @@ const Login = () => {
                   <input
                     type="password"
                     placeholder="password"
-                    className="input input-bordered" name="password"
+                    className="input input-bordered"
+                    name="password"
                   />
                   <label className="label">
                     <a href="#" className="label-text-alt link link-hover">
@@ -85,8 +76,14 @@ const Login = () => {
                   />
                 </div>
               </form>
-              <p>New to Car Doctors? <Link to="/signup" className="font-bold text-purple-700">Sign Up</Link> </p>
+              <p>
+                New to Car Doctors?{' '}
+                <Link to="/signup" className="font-bold text-purple-700">
+                  Sign Up
+                </Link>{' '}
+              </p>
             </div>
+            <SocialLogIn></SocialLogIn>
           </div>
         </div>
       </div>
